@@ -1,0 +1,43 @@
+{
+  "name": "fake-server",
+  "version": "0.0.3",
+  "description": "The easiest way to build a fake-server for your front-ends",
+  "main": "build/index.js",
+  "dependencies": {
+    "clone": "^2.1.1",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "faker": "^4.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch",
+    "build": "webpack"
+  },
+  "author": "Parsa Ghadimi <qti3eqti3e@gmail.com>",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.5.1",
+    "node-gyp": "^3.6.2",
+    "webpack": "^3.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Qti3e/node-fake-server.git"
+  },
+  "keywords": [
+    "Server",
+    "Faker",
+    "Mock"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Qti3e/node-fake-server/issues"
+  },
+  "homepage": "https://github.com/Qti3e/node-fake-server#readme"
+}
