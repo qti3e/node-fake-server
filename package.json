@@ -1,5 +1,5 @@
 {
-  "name": "fake-server",
+  "name": "node-fake-server",
   "version": "0.0.3",
   "description": "The easiest way to build a fake-server for your front-ends",
   "main": "build/index.js",
