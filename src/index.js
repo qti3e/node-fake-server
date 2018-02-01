@@ -3,7 +3,7 @@
 //
 // const Videos  = Mock.dataset({
 //   uuid: Mock.primaryKey(Faker.random.uuid),
-//   title: Faker.lorem.sentence
+//   title: Faker.lorem.sentence,
 // }, 200)
 //
 // Mock.setDelay(2000)
@@ -37,6 +37,10 @@ app.use(function(req, res, next){
 
 app.setDelay = function(num){
   configs.delay = num
+}
+
+app.randomDelay = function(min = 200, max = 2000){
+  configs.delay = () => Math.floor(Math.random() * (max - min)) + min
 }
 
 app.dataset = function(proto, num = 100){
@@ -81,6 +85,26 @@ app.someOf = function(...x){
     }while(ret.length < n)
     return ret.map(i => x[i])
   }
+}
+
+app.raw = function(data){
+  return () => data
+}
+
+app.sendData = function(data){
+  return (req, res) => res.send(data)
+}
+
+app.sendFile = function(fileSrc){
+  return (req, res) => res.sendFile(fileSrc)
+}
+
+app.status = function(status = 'OK'){
+  return (req, res) => res.send({status: status})
+}
+
+app.sendOneOf = function(...x){
+  return (req, res) => app.oneOf(...x)
 }
 
 export default app

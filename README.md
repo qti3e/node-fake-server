@@ -44,7 +44,19 @@ Mock.listen(4040)
 
 # API
 - Mock.setDelay(number|function)  
-  set response delay in ms, if you pass a function it will call it on every request   
+  Set response delay in ms, if you pass a function it will call it on every request   
+- Mock.randomDelay(min = 200, max = 2000)  
+  Helper function for setting random delay for each request  
+- Mock.raw(data)() -> data  
+  Create a function that return the input data back  
+- Mock.sendData(data)(req, res, next)  
+  Write data to all HTTP requests in an endpoint  
+- Mock.sendFile(fileSrc)(req, res, next)  
+  Send one file file to all requests in an endpoint  
+- Mock.status(status = 'OK')(req, res, next)  
+  Send an empty response to requests  
+- Mock.sendOneOf(...array)(req, res, next)  
+  Send one member of array randomly to request  
 - Mock.oneOf(...array)()  
   Select a random element from params
 - Mock.someOf(...array)()  
@@ -106,18 +118,19 @@ Mock.get('/', Videos.first(2))
 
 ```json
 {
-  "entities": {
-    "0acec3bc-926d-44eb-b944-ecedefce5516": {
+  "status": "OK",
+  "entities": [
+    {
       "uuid": "0acec3bc-926d-44eb-b944-ecedefce5516",
       "title": "Qui facere occaecati quo omnis asperiores fugiat sunt eius.",
       "category": "Node.js"
     },
-    "bb290194-718a-47c2-8941-6f554c051c83": {
+    {
       "uuid": "bb290194-718a-47c2-8941-6f554c051c83",
       "title": "Aspernatur possimus aut dolorem consequuntur fuga eos voluptas.",
       "category": "Node.js"
     }
-  }
+  ]
 }
 ```
 
@@ -129,22 +142,23 @@ Mock.get('/:page?', Videos.only('title').paginate(3))
 
 ```json
 {
+  "status": "OK",
   "paginate": {
     "total": 200,
     "hasNextPage": true,
     "hasPrevPage": false
   },
-  "entities": {
-    "5b15a187-8514-4135-af18-04132ffaca80": {
+  "entities": [
+    {
       "title": "Dignissimos quia voluptatibus fugiat."
     },
-    "1660453f-29bc-4b30-b5e1-cc19e464c482": {
+    {
       "title": "Repudiandae aut et sunt."
     },
-    "4a900aba-4669-4aaa-811c-cdb97debe141": {
+    {
       "title": "Doloremque corporis expedita vel."
     }
-  }
+  ]
 }
 ```
 
@@ -156,6 +170,7 @@ Mock.get('/:uuid?', Videos.uuid().one())
 
 ```json
 {
+  "status": "OK",
   "data": {
     "uuid": "d2f3c96a-ccd7-4e2f-b025-39bfe0a9be63",
     "title": "Officiis est repellendus qui expedita.",

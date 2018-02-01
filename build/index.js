@@ -7928,7 +7928,7 @@ var app = (0, _express2.default)(); // import Mock from 'node-mock'
 //
 // const Videos  = Mock.dataset({
 //   uuid: Mock.primaryKey(Faker.random.uuid),
-//   title: Faker.lorem.sentence
+//   title: Faker.lorem.sentence,
 // }, 200)
 //
 // Mock.setDelay(2000)
@@ -7955,6 +7955,15 @@ app.use(function (req, res, next) {
 
 app.setDelay = function (num) {
   configs.delay = num;
+};
+
+app.randomDelay = function () {
+  var min = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 200;
+  var max = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;
+
+  configs.delay = function () {
+    return Math.floor(Math.random() * (max - min)) + min;
+  };
 };
 
 app.dataset = function (proto) {
@@ -8016,6 +8025,42 @@ app.someOf = function () {
     return ret.map(function (i) {
       return x[i];
     });
+  };
+};
+
+app.raw = function (data) {
+  return function () {
+    return data;
+  };
+};
+
+app.sendData = function (data) {
+  return function (req, res) {
+    return res.send(data);
+  };
+};
+
+app.sendFile = function (fileSrc) {
+  return function (req, res) {
+    return res.sendFile(fileSrc);
+  };
+};
+
+app.status = function () {
+  var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'OK';
+
+  return function (req, res) {
+    return res.send({ status: status });
+  };
+};
+
+app.sendOneOf = function () {
+  for (var _len3 = arguments.length, x = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+    x[_key3] = arguments[_key3];
+  }
+
+  return function (req, res) {
+    return app.oneOf.apply(app, x);
   };
 };
 
@@ -20313,12 +20358,14 @@ function Obj() {
     if (ret._one_) {
       ret.response.data = keys[0] ? _data_[keys[0]] : null;
     } else {
-      var data = {};
+      var data = [];
       for (var _i in keys) {
-        data[keys[_i]] = _data_[keys[_i]];
+        data.push(_data_[keys[_i]]);
       }
       ret.response.entities = data;
     }
+
+    ret.response.status = 'OK';
 
     res.send(ret.response);
   };

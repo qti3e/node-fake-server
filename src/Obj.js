@@ -30,13 +30,15 @@ function Obj(){
     if(ret._one_){
       ret.response.data = keys[0] ? _data_[keys[0]] : null
     }else{
-      let data = {}
+      let data = []
       for(let i in keys){
-        data[keys[i]] = _data_[keys[i]]
+        data.push(_data_[keys[i]])
       }
       ret.response.entities = data
     }
 
+    ret.response.status = 'OK'
+    
     res.send(ret.response)
   }
 
